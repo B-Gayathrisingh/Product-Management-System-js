@@ -1,0 +1,48 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "name": "User",
+      "email": "user@example.com",
+      "password": "user123",
+      "role": "user"
+    },
+    {
+      "id": "b03f",
+      "name": "lap",
+      "email": "lap@123.com",
+      "password": "1234",
+      "role": "admin"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Laptop",
+      "description": "High performance laptop",
+      "price": 1200,
+      "image": "images/laptop.png"
+    },
+    {
+      "id": "2",
+      "name": "Smartphone",
+      "description": "Latest model with advanced features",
+      "price": 699,
+      "image": "images/smartphone.png"
+    },
+    {
+      "id": "ac51",
+      "name": "earbuds",
+      "description": "best selling",
+      "price": 2345,
+      "image": "images/earbuds.png"
+    }
+  ]
+}

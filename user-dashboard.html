@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard - PMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">User Dashboard</a>
+    <div class="d-flex">
+      <a class="btn btn-outline-light me-2" href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+      <button class="btn btn-outline-danger" id="logoutBtn">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h2>Products</h2>
+  <div class="row" id="productList"></div>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function updateCartCount() {
+  document.getElementById('cartCount').innerText = cart.length;
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem('user');
+  window.location.href = 'login.html';
+});
+
+async function loadProducts() {
+  const res = await fetch('http://localhost:3000/products');
+  const products = await res.json();
+  const productList = document.getElementById('productList');
+  productList.innerHTML = '';
+
+  products.forEach(p => {
+    const card = `
+      <div class="col-md-4 mb-3">
+        <div class="card h-100">
+          <img src="${p.image}" class="card-img-top" alt="${p.name}" style="height:200px; object-fit:contain;">
+          <div class="card-body">
+            <h5 class="card-title">${p.name}</h5>
+            <p class="card-text">${p.description}</p>
+            <p class="fw-bold">Price: $${p.price}</p>
+            <button class="btn btn-success" onclick="addToCart(${p.id}, '${p.name}', ${p.price})">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    `;
+    productList.innerHTML += card;
+  });
+}
+
+function addToCart(id, name, price) {
+  cart.push({id, name, price});
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+  alert(`${name} added to cart!`);
+}
+
+updateCartCount();
+loadProducts();
+</script>
+</body>
+</html>
